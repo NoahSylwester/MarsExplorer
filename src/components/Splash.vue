@@ -7,7 +7,7 @@
         <p>
             traverse the surface of Mars through images captured by Mars rovers
         </p>
-        <button>enter</button>
+        <button @click="enterSite()">enter</button>
         <img id="earth-img" alt="earth image" src="../assets/earth.png">
     </div>
 </template>
@@ -17,6 +17,11 @@ export default {
   name: 'Splash',
   props: {
     msg: String
+  },
+  methods: {
+    enterSite: function() {
+      this.$emit('enterSite');
+    }
   }
 }
 </script>

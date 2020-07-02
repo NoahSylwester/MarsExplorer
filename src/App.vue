@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Splash />
+    <Splash v-if="page === 'Splash'" @enterSite="changePage('Home')"/>
+    <!-- <button @click="changePage('something')" /> -->
   </div>
 </template>
 
@@ -11,6 +12,16 @@ export default {
   name: 'App',
   components: {
     Splash
+  },
+  data() {
+    return {
+      page: "Splash"
+    }
+  },
+  methods: {
+    changePage: function(pageName) {
+      this.page = pageName;
+    }
   }
 }
 </script>

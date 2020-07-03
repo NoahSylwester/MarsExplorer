@@ -1,20 +1,25 @@
 <template>
     <div class="splash">
+      <div class="content-wrapper">
         <img id="mars-img" alt="mars image" src="../assets/mars.png">
         <h1>
             MARS EXPLORER
         </h1>
-        <p>
+        <p class="description">
             traverse the surface of Mars through images captured by Mars rovers
         </p>
         <button @click="enterSite()">enter</button>
         <img id="earth-img" alt="earth image" src="../assets/earth.png">
+      </div>
     </div>
 </template>
 
 <script>
 export default {
   name: 'Splash',
+  components: {
+    
+  },
   props: {
     msg: String
   },
@@ -28,20 +33,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 #mars-img {
   width: 10vw;
   height: 10vw;
@@ -54,11 +45,18 @@ a {
   border-radius: 1000vw;
 }
 .splash {
-    padding: 30px;
+    height: 100vh;
+
+    overflow: hidden;
+}
+.content-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.description {
+  margin: 20px;
 }
 button {
     font-family: Avenir, Helvetica, Arial, sans-serif;

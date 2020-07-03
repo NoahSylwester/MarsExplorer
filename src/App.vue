@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <Splash v-if="page === 'Splash'" @enterSite="changePage('Home')"/>
-    <!-- <button @click="changePage('something')" /> -->
+    <Home v-if="page === 'Home'" @returnToSplash="changePage('Splash')"/>
   </div>
 </template>
 
 <script>
 import Splash from './components/Splash.vue'
+import Home from './components/Home.vue'
 
 export default {
   name: 'App',
   components: {
-    Splash
+    Splash,
+    Home
   },
   data() {
     return {
@@ -27,6 +29,11 @@ export default {
 </script>
 
 <style>
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
 body {
   margin: 0;
 }
@@ -39,6 +46,5 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: black;
-  overflow: hidden;
 }
 </style>

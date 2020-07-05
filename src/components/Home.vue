@@ -3,26 +3,29 @@
         <h1>Home</h1>
         <button @click="APICall()">CLICK</button>
         <label for="sol-input">Sol</label>
-        <input id="sol-input" name="sol-input" type="number" placeholder="1000" @change="changeSol($event.target.value)" />
+        <input id="sol-input" name="sol-input" type="number" :value="sol" @change="changeSol($event.target.value)" />
         <label for="camera-input">Camera</label>
-        <select id="camera-input" name="camera-input" @change="changeCamera($event.target.value)">
-          <option value="FHAZ">FHAZ</option>
-          <option value="RHAZ">RHAZ</option>
-          <option value="MAST">MAST</option>
-          <option value="CHEMCAM">CHEMCAM</option>
-          <option value="MAHLI">MAHLI</option>
-          <option value="MARDI">MARDI</option>
-          <option value="NAVCAM">NAVCAM</option>
-          <option value="PANCAM">PANCAM</option>
-          <option value="MINITES">MINITES</option>
+        <select id="camera-input" :value="camera" name="camera-input" @change="changeCamera($event.target.value)">
+          <option value="any">Any</option>
+          <option value="fhaz">FHAZ</option>
+          <option value="rhaz">RHAZ</option>
+          <option value="mast">MAST</option>
+          <option value="chemcam">CHEMCAM</option>
+          <option value="mahli">MAHLI</option>
+          <option value="mardi">MARDI</option>
+          <option value="navcam">NAVCAM</option>
+          <option value="pancam">PANCAM</option>
+          <option value="minites">MINITES</option>
         </select>
         <label for="rover-input">Rover</label>
         <select id="rover-input" name="rover-input" @change="changeRover($event.target.value)">
-          <option value="Curiosity">Curiosity</option>
-          <option value="Opportunity">Opportunity</option>
-          <option value="Spirit">Spirit</option>
+          <option value="curiosity">Curiosity</option>
+          <option value="opportunity">Opportunity</option>
+          <option value="spirit">Spirit</option>
         </select>
-        <img class="mars-photo" v-for="photo in photos" :key="photo.img_src" :src="photo.img_src"/>
+        <div>
+          <img class="mars-photo" v-for="photo in photos" :key="photo.img_src" :src="photo.img_src"/>
+        </div>
     </div>
 </template>
 
@@ -34,9 +37,9 @@ export default {
   },
   data() {
     return {
-      sol: 1,
-      camera: '',
-      rover: '',
+      sol: 1000,
+      camera: 'any',
+      rover: 'curiosity',
       photos: []
     }
   },
@@ -51,7 +54,8 @@ export default {
         this.rover = newRover;
       },
       APICall: async function() {
-          const response = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${this.sol}&api_key=${process.env.VUE_APP_API_KEY}`);
+          const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.rover}/photos?sol=${this.sol}${this.camera === "any" ? '' : `&camera=${this.camera}`}&api_key=${process.env.VUE_APP_API_KEY}`;
+          const response = await fetch(url);
           const responseJSON = await response.json();
           this.photos = responseJSON.photos.slice(0,5);
       }

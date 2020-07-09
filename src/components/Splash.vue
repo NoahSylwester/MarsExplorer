@@ -1,32 +1,55 @@
 <template>
-    <div class="splash">
-      <div class="content-wrapper">
-        <img id="mars-img" alt="mars image" src="../assets/mars.png">
-        <h1>
-            MARS EXPLORER
-        </h1>
-        <p class="description">
-            traverse the surface of Mars through images captured by Mars rovers
-        </p>
-        <button @click="enterSite()">enter</button>
-        <img id="earth-img" alt="earth image" src="../assets/earth.png">
+  <transition
+    @after-enter="showButton = true"
+    @after-leave="fullyGone()"
+    name="fade"
+  >
+      <div v-if="show" class="splash">
+        <div class="content-wrapper">
+          <img id="mars-img" alt="mars image" src="../assets/mars.png">
+          <h1>
+              MARS EXPLORER
+          </h1>
+          <p class="description">
+              traverse the surface of Mars through images captured by Mars rovers
+          </p>
+          <transition name="fadeButton">
+            <button v-if="showButton" @click="enterSite()">enter</button>
+          </transition>
+          <div v-if="!showButton" class="buttonSubstitute"></div>
+          <img id="earth-img" alt="earth image" src="../assets/earth.png">
+        </div>
       </div>
-    </div>
+  </transition>
 </template>
 
 <script>
+import { bus } from '../main'
+
 export default {
   name: 'Splash',
+  data() {
+    return {
+      show: false,
+      showButton: false
+    }
+  },
   components: {
     
   },
   props: {
     msg: String
   },
+  mounted: function() {
+    this.show = true;
+  },
   methods: {
     enterSite: function() {
-      this.$emit('enterSite');
-    }
+      this.$emit('enter-site');
+    },
+    fullyGone: function() {
+      bus.$emit('splash-fully-gone');
+    },
   }
 }
 </script>
@@ -58,6 +81,11 @@ export default {
 .description {
   margin: 20px;
 }
+.buttonSubstitute {
+    width: 7vw;
+    height: 7vw;
+    border: 0;
+}
 button {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -83,5 +111,20 @@ button:hover {
 }
 button:focus {
     outline: none;
+}
+.fade-enter-active {
+  transition: opacity 2s;
+}
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.fadeButton-enter-active, .fadeButton-leave-active {
+  transition: opacity 1.5s ease-in;
+}
+.fadeButton-enter, .fadeButton-leave-to {
+  opacity: 0;
 }
 </style>

@@ -1,29 +1,41 @@
 <template>
   <div id="app">
-    <Splash v-if="page === 'Splash'" @enterSite="changePage('Home')"/>
-    <Home v-if="page === 'Home'" @returnToSplash="changePage('Splash')"/>
+    <Splash
+      v-if="page === 'Splash'"
+      @enter-site="changePage('')"
+    />
+    <Gallery
+      v-if="page === 'Gallery'" 
+      @return-to-splash="changePage('Splash')"
+    />
   </div>
 </template>
 
 <script>
 import Splash from './components/Splash.vue'
-import Home from './components/Home.vue'
+import Gallery from './components/Gallery.vue'
+import { bus } from './main'
 
 export default {
   name: 'App',
   components: {
     Splash,
-    Home
+    Gallery
   },
   data() {
     return {
       page: "Splash"
     }
   },
+  created (){
+    bus.$on('splash-fully-gone', () => {
+      this.changePage('Gallery');
+    })
+  },
   methods: {
     changePage: function(pageName) {
       this.page = pageName;
-    }
+    },
   }
 }
 </script>
@@ -43,8 +55,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   width: 100vw;
   background-color: black;
+  overflow: contain;
 }
 </style>

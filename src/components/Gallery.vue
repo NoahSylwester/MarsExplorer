@@ -5,9 +5,12 @@
   >
     <div v-if="show" class="gallery">
       <div id="api-area">
-        <h1 class="api-response-text" v-if="photos.length === 0">search for images</h1>
-        <h1 class="api-response-text" v-if="photos.length !== 0">{{photos.length}} photos found</h1>
         <div id="api-controls">
+          <h1 class="api-response-text" v-if="photos.length === 0">search for images</h1>
+          <h1 class="api-response-text" v-if="photos.length !== 0">
+            <p>{{photos.length}} photos found</p>
+            <p>photo {{currentIndex + 1}}</p>
+          </h1>
           <div id="index-controls">
             <div @click="changeIndex('left')" id="left-arrow" class="nav-arrow"></div>
             <div @click="changeIndex('right')" id="right-arrow" class="nav-arrow"></div>
@@ -117,9 +120,9 @@ export default {
   align-items: center;
 }
 .api-response-text {
-  position: absolute;
-  top: 100px;
-  left: 10px;
+  /* position: absolute; */
+  top: 5vh;
+  left: 5vh;
 }
 input, select, label, button {
   display: block;
@@ -134,6 +137,7 @@ input, select, label, button {
 }
 #index-controls {
   width: 100%;
+  margin: 10px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -162,7 +166,14 @@ input, select, label, button {
 .nav-arrow {
   width: 20px;
   height: 20px;
+  border-radius: 20px;
   background-color: midnightblue;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.nav-arrow:hover {
+  background-color: white;
+  box-shadow: 0 0 10px white;
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;

@@ -34,8 +34,9 @@ export default {
 .viewed-image {
   border: 2px midnightblue solid;
   box-shadow: 0 0 1000px 0px midnightblue;
-  width: 60vw;
-  height: 60vw;
+  width: 75vh;
+  max-width: 50vw;
+  height: 75vh;
   object-fit: cover;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
